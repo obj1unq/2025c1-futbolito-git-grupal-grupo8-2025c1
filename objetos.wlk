@@ -26,7 +26,7 @@ object lionel {
 
 	method validarTaquito(){
 		if (bocha.position() != position){
-			self.error("¡Lio no tiene la bocha!  ")
+			self.error("¡No tengo la bocha!  ")
 		}
 	}
 
