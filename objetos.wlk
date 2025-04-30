@@ -2,6 +2,8 @@
 import wollok.game.*
 
 object lionel {
+
+	var property bocha = pelota
 	
 	var property position = game.at(3,5)
 	
@@ -17,6 +19,20 @@ object lionel {
 		position = game.at((game.width() - 1).min(position.x() + 1), position.y()) 
 	}
 	
+	method taquito(){
+		self.validarTaquito()
+		bocha.position(game.at(self.siguienteEnX(), bocha.position().y()))
+	}
+
+	method validarTaquito(){
+		if (bocha.position() != position){
+			self.error("¡Lio no tiene la bocha!  ")
+		}
+	}
+
+	method siguienteEnX(){
+		return 0.max(bocha.position().x() -2)
+	}
 }
 
 
