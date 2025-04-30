@@ -4,6 +4,7 @@ import wollok.game.*
 object lionel {
 	
 	const tiempoLevantamiento = 2000
+	const alturaLevantada = 1
 	var property position = game.at(3,5)
 	var property bocha = pelota
 	
@@ -30,10 +31,10 @@ object lionel {
 
 	method levantarla() {
 		self.validarLevantarla()
-		bocha.subir(1)
+		bocha.subir(alturaLevantada)
 		game.schedule(
 			tiempoLevantamiento,
-			{ bocha.bajar(1) }
+			{ bocha.bajar(alturaLevantada) }
 		)
 	}
 }
