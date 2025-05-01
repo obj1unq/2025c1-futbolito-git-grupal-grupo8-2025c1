@@ -1,0 +1,17 @@
+import objetos.*
+
+describe "pelota" {
+ 
+  method initialize() {
+    game.cellSize(40)
+	  game.width(15)
+	  game.height(10)
+  }
+
+  test "pateaPelota" {
+    assert.notEquals(lionel.position(), pelota.position())
+    lionel.irHaciaPelota()
+    assert.equals(lionel.position(), pelota.position())
+    lionel.patear()
+  }
+}

@@ -20,6 +20,20 @@ object lionel {
 		position = game.at((game.width() - 1).min(position.x() + 1), position.y()) 
 	}
 	
+	method patear() {
+		if (self.validarPosicion()) {
+             bocha.pelotaPateada()
+		}
+	}
+
+	method validarPosicion() {
+		return self.position() == bocha.position() 
+	}
+
+	method irHaciaPelota() {
+		bocha.position()
+	}
+
 	method taquito(){
 		self.validarTaquito()
 		bocha.position(game.at(self.siguienteEnX(), bocha.position().y()))
@@ -56,7 +70,11 @@ object lionel {
 
 object pelota {
 	const property image="pelota.png"
-	var property position = game.at(5,5)
+	var property position = game.at(5,5)	
+
+	method pelotaPateada() {
+		position = game.at((game.width() - 1).min(position.x() + 3), position.y()) 
+	}
 
 	method subir(celdas){
 		position = position.up(celdas)
@@ -67,7 +85,3 @@ object pelota {
 	}
 }
 
-/* 30/4
-
-
-*/
