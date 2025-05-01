@@ -3,9 +3,10 @@ import wollok.game.*
 
 object lionel {
 
-	var property bocha = pelota
-	
+	const tiempoLevantamiento = 2000
+	const alturaLevantada = 1	
 	var property position = game.at(3,5)
+	var property bocha = pelota
 	
 	method image() {
 		return "lionel-titular.png"
@@ -33,12 +34,37 @@ object lionel {
 	method siguienteEnX(){
 		return 0.max(bocha.position().x() -2)
 	}
+	method validarLevantarla(){
+		if(bocha.position() != position){
+			self.error("No se puede levantar la pelota si no se esta sobre ella.")
+		}
+		if(bocha.position().y() >= game.height() - 1){
+			self.error("No se puede levantar la pelota fuera de la cuadricula.")
+		}
+	}
+
+	method levantarla() {
+		self.validarLevantarla()
+		bocha.subir(alturaLevantada)
+		game.schedule(
+			tiempoLevantamiento,
+			{ bocha.bajar(alturaLevantada) }
+		)
+	}
 }
 
 
 object pelota {
 	const property image="pelota.png"
-	var property position = game.at(5,5)	
+	var property position = game.at(5,5)
+
+	method subir(celdas){
+		position = position.up(celdas)
+	}
+
+	method bajar(celdas){
+		position = position.down(celdas)
+	}
 }
 
 /* 30/4
