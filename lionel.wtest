@@ -1,0 +1,44 @@
+import objetos.*
+
+
+describe "Levantar la pelota"{
+    method initialize(){
+        game.width(15)
+        game.height(10)
+    }
+
+    test "Puede levantar la pelota"{
+        lionel.position(game.at(0, 0))
+        pelota.position(game.at(0, 0))
+        lionel.bocha(pelota)
+
+        lionel.levantarla()
+        assert.equals(game.at(0, 1), pelota.position())
+    }
+
+    test "Subir y bajar la pelota"{
+        pelota.position(game.at(0, 0))
+        
+        pelota.subir(1)
+        assert.equals(game.at(0, 1), pelota.position())
+
+        pelota.bajar(1)
+        assert.equals(game.at(0, 0), pelota.position())
+    }
+
+    test "No puede sacar la pelota del tablero"{
+        lionel.position(game.at(0, game.height()-1))
+        pelota.position(game.at(0, game.height()-1))
+        lionel.bocha(pelota)
+
+        assert.throwsException({lionel.levantarla()})
+    }
+
+    test "No puede levantar la pelota si no esta sobre ella"{
+        lionel.position(game.at(0, 0))
+        pelota.position(game.at(1, 0))
+        lionel.bocha(pelota)
+
+        assert.throwsException({lionel.levantarla()})
+    }
+}

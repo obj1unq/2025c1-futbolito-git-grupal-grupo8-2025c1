@@ -2,7 +2,9 @@
 import wollok.game.*
 
 object lionel {
-	
+
+	const tiempoLevantamiento = 2000
+	const alturaLevantada = 1	
 	var property position = game.at(3,5)
 	var property bocha = pelota
 	
@@ -31,6 +33,38 @@ object lionel {
 	method irHaciaPelota() {
 		bocha.position()
 	}
+
+	method taquito(){
+		self.validarTaquito()
+		bocha.position(game.at(self.siguienteEnX(), bocha.position().y()))
+	}
+
+	method validarTaquito(){
+		if (bocha.position() != position){
+			self.error("¡No tengo la bocha!  ")
+		}
+	}
+
+	method siguienteEnX(){
+		return 0.max(bocha.position().x() -2)
+	}
+	method validarLevantarla(){
+		if(bocha.position() != position){
+			self.error("No se puede levantar la pelota si no se esta sobre ella.")
+		}
+		if(bocha.position().y() >= game.height() - 1){
+			self.error("No se puede levantar la pelota fuera de la cuadricula.")
+		}
+	}
+
+	method levantarla() {
+		self.validarLevantarla()
+		bocha.subir(alturaLevantada)
+		game.schedule(
+			tiempoLevantamiento,
+			{ bocha.bajar(alturaLevantada) }
+		)
+	}
 }
 
 
@@ -41,9 +75,13 @@ object pelota {
 	method pelotaPateada() {
 		position = game.at((game.width() - 1).min(position.x() + 3), position.y()) 
 	}
+
+	method subir(celdas){
+		position = position.up(celdas)
+	}
+
+	method bajar(celdas){
+		position = position.down(celdas)
+	}
 }
 
-// Patear: Hacer que Lionel patee la pelota al apretar la tecla p: La pelota se desplaza 3 posiciones a la derecha 
-//(o lo máximo que se pueda antes de salir de pantalla). 
-//Tip: usar el método min de los números entre el x actual de la pelota + 3 y el ancho del tablero - 1. 
-//Validar que la pelota se encuentre en la misma posicion que Lionel
